@@ -16,7 +16,13 @@ params={
   'subject': 'Hello',
   'text': 'Testing some Mailgun awesomeness!'
 }
-response = requests.post(url, auth=('api', api_key), data=params)
+
+with open('./attachment1.txt', 'rb') as f:
+    attachment = f.read()
+
+files = [('attachment', ('attachment1.txt', attachment))]
+
+response = requests.post(url, auth=('api', api_key), data=params, files=files)
 
 if response.status_code == 200:
   print('An email has been sent successfully')
